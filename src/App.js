@@ -1,13 +1,18 @@
 import React from 'react';
 import './App.css';
 import Railu from './Railu.jpg';
-
+import Modal from './Modal/Modal';
+ 
 
 class NameForm extends React.Component{
   constructor(props){
       super(props);
-      this.state={value:''};
-      this.handleChange=this.handleChange.bind(this);
+      this.state={
+          value:'',
+          isShowing:false
+        };
+      
+        this.handleChange=this.handleChange.bind(this);
       this.handleSubmit=this.handleSubmit.bind(this);
   }
 
@@ -21,9 +26,28 @@ class NameForm extends React.Component{
 
   }
 
-  render() {
+  openModalHandler=()=>{
+      this.setState({isShowing:true});
+  }
+
+  closeModalHandler=()=>{
+      this.setState({isShowing:false});
+  }
+
+
+
+render() {
       return (
+
         <div>
+        { this.state.isShowing ? <div onClick={this.closeModalHandler} className="back-drop"></div> : null }
+        <button className="open-modal-btn" onClick={this.openModalHandler}>Open Modal</button>
+        <Modal
+            className="modal"
+            show={this.state.isShowing}
+            close={this.closeModalHandler}>
+                Maybe aircrafts fly very high because they don't want to be seen in plane sight?
+        </Modal>    
         <section className="one-fourth" id="html">
             <img src={Railu} alt="A railu"/>
             <form onSubmit={this.handleSubmit}>
@@ -39,6 +63,8 @@ class NameForm extends React.Component{
 
               <input type="submit" value="submit"/>
           </form>
+
+          
         </section>
         
        </div>
